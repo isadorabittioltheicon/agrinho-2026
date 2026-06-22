@@ -7,84 +7,116 @@
 
 <style>
 
-/* ===== BASE ===== */
+/* ================= LOGIN ================= */
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
-    background: #fff8dc;
-}
-
-/* ===== CABEÇALHO ===== */
-header {
-    background: linear-gradient(90deg, #f4c430, #000);
-    color: white;
-    padding: 20px;
-    text-align: center;
-}
-
-/* ===== MENU (ABAS) ===== */
-nav {
+    font-family: Arial;
+    background: linear-gradient(135deg, #f4c430, #000);
+    height: 100vh;
     display: flex;
     justify-content: center;
-    background: #222;
-    flex-wrap: wrap;
+    align-items: center;
 }
 
-nav button {
-    background: none;
-    border: none;
+/* GLASS LOGIN */
+.login {
+    background: rgba(255,255,255,0.15);
+    backdrop-filter: blur(10px);
+    padding: 30px;
+    border-radius: 15px;
+    text-align: center;
     color: white;
-    padding: 15px;
-    cursor: pointer;
-    transition: 0.3s;
-    font-size: 16px;
+    width: 300px;
 }
 
-nav button:hover {
-    background: #f4c430;
-    color: black;
-}
-
-/* ===== SEÇÕES ===== */
-section {
-    display: none;
-    padding: 20px;
-    max-width: 1000px;
-    margin: auto;
-}
-
-.active {
-    display: block;
-}
-
-/* ===== CARDS ===== */
-.card {
-    background: white;
-    padding: 15px;
-    margin: 15px 0;
-    border-radius: 12px;
-    box-shadow: 0 3px 10px rgba(0,0,0,0.1);
-}
-
-/* ===== IMAGENS ===== */
-img {
-    width: 100%;
-    border-radius: 12px;
-}
-
-/* ===== BOTÕES ===== */
-button.action {
-    background: #f4c430;
-    border: none;
+input {
+    width: 90%;
     padding: 10px;
-    cursor: pointer;
+    margin: 8px 0;
+    border: none;
     border-radius: 8px;
-    font-weight: bold;
 }
 
-button.action:hover {
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background: #f4c430;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+button:hover {
     background: black;
     color: white;
+}
+
+/* ================= APP ================= */
+#app {
+    display: none;
+    width: 100%;
+    height: 100vh;
+    background: #fff8dc;
+    flex-direction: column;
+}
+
+/* HEADER */
+header {
+    background: #000;
+    color: white;
+    text-align: center;
+    padding: 10px;
+}
+
+/* CONTEÚDO */
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    flex: 1;
+}
+
+/* RODA */
+.roda {
+    width: 250px;
+    height: 250px;
+    border-radius: 50%;
+    background: conic-gradient(
+        #f4c430 0deg 90deg,
+        #222 90deg 180deg,
+        #f4c430 180deg 270deg,
+        #222 270deg 360deg
+    );
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+}
+
+/* BOTÕES DA RODA */
+.part {
+    position: absolute;
+    width: 120px;
+    height: 120px;
+    cursor: pointer;
+}
+
+/* INFO */
+.info {
+    margin-top: 20px;
+    width: 80%;
+    background: white;
+    padding: 15px;
+    border-radius: 10px;
+    display: none;
+}
+
+/* QUIZ */
+#quiz {
+    display: none;
+    padding: 20px;
 }
 
 </style>
@@ -92,123 +124,107 @@ button.action:hover {
 
 <body>
 
+<!-- ================= LOGIN ================= -->
+<div class="login" id="login">
+    <h2>🐝 Agrinho 2026</h2>
+
+    <input id="user" placeholder="Nome do concurso">
+    <input id="pass" placeholder="Ano">
+
+    <button onclick="entrar()">Entrar</button>
+</div>
+
+<!-- ================= APP ================= -->
+<div id="app">
+
 <header>
-<h1>🐝 Abelhas e o Futuro Sustentável</h1>
-<p>Agrinho 2026 - Água, produção e biodiversidade</p>
+<h2>🐝 Painel das Abelhas</h2>
 </header>
 
-<!-- ===== ABAS ===== -->
-<nav>
-<button onclick="openTab('home')">🏠 Início</button>
-<button onclick="openTab('importancia')">🐝 Importância</button>
-<button onclick="openTab('impactos')">⚠️ Impactos</button>
-<button onclick="openTab('quiz')">🧠 Quiz</button>
-</nav>
+<div class="container">
 
-<!-- ===== HOME ===== -->
-<section id="home" class="active">
+<!-- RODA -->
+<div class="roda">
 
-<div class="card">
-<h2>Bem-vindo ao projeto</h2>
-<p>
-Este site mostra a importância das abelhas para a agricultura, a produção de alimentos e o equilíbrio ambiental dentro do tema Agrinho: <b>agro forte e futuro sustentável</b>.
-</p>
-<img src="https://images.unsplash.com/photo-1501004318641-b39e6451bec6" alt="abelhas">
-</div>
-
-</section>
-
-<!-- ===== IMPORTÂNCIA ===== -->
-<section id="importancia">
-
-<div class="card">
-<h2>🐝 Importância das abelhas</h2>
-<p>
-As abelhas são responsáveis pela polinização de cerca de 70% dos alimentos que consumimos.
-Sem elas, frutas, verduras e muitos alimentos deixariam de existir ou ficariam muito mais caros.
-</p>
-</div>
-
-<div class="card">
-<h2>🌱 Relação com o Agrinho</h2>
-<p>
-O Agrinho incentiva sustentabilidade e equilíbrio entre produção e meio ambiente.
-As abelhas são essenciais para isso, pois ligam agricultura e natureza.
-</p>
-</div>
-
-</section>
-
-<!-- ===== IMPACTOS ===== -->
-<section id="impactos">
-
-<div class="card">
-<h2>⚠️ Agrotóxicos</h2>
-<p>
-O uso excessivo de agrotóxicos prejudica diretamente as colônias de abelhas,
-causando diminuição da população e desequilíbrio ambiental.
-</p>
-</div>
-
-<div class="card">
-<h2>🌍 Consequências</h2>
-<p>
-Sem abelhas, há queda na produção de alimentos, aumento de preços e perda da biodiversidade.
-</p>
-</div>
-
-</section>
-
-<!-- ===== QUIZ ===== -->
-<section id="quiz">
-
-<div class="card">
-<h2>🧠 Quiz interativo</h2>
-
-<p id="question">Clique para começar</p>
-
-<button class="action" onclick="answer(true)">Colapso na agricultura</button>
-<button class="action" onclick="answer(false)">Nada mudaria</button>
-<button class="action" onclick="answer(false)">Mais alimentos</button>
-
-<p id="result"></p>
-
-<button class="action" onclick="nextQuestion()">Próxima</button>
+    <div class="part" onclick="mostrar(0)"></div>
+    <div class="part" onclick="mostrar(1)"></div>
+    <div class="part" onclick="mostrar(2)"></div>
+    <div class="part" onclick="mostrar(3)"></div>
 
 </div>
 
-</section>
+<!-- INFO -->
+<div class="info" id="info"></div>
+
+<button onclick="irQuiz()">Ir para o Quiz 🧠</button>
+
+</div>
+
+<!-- QUIZ -->
+<div id="quiz">
+<h2>🧠 Quiz</h2>
+
+<p id="q">O que acontece sem abelhas?</p>
+
+<button onclick="res(true)">Colapso agrícola</button>
+<button onclick="res(false)">Nada muda</button>
+
+<p id="r"></p>
+
+</div>
+
+</div>
 
 <script>
 
-/* ===== ABAS ===== */
-function openTab(tab) {
-    let sections = document.querySelectorAll("section");
-    sections.forEach(s => s.classList.remove("active"));
+/* LOGIN */
+function entrar() {
+    let u = document.getElementById("user").value.toLowerCase();
+    let p = document.getElementById("pass").value;
 
-    document.getElementById(tab).classList.add("active");
-}
-
-/* ===== QUIZ ===== */
-let score = 0;
-
-function answer(correct) {
-    let res = document.getElementById("result");
-
-    if (correct) {
-        res.innerText = "✔ Correto!";
-        res.style.color = "green";
-        score++;
+    if (u === "agrinho" && p === "2026") {
+        document.getElementById("login").style.display = "none";
+        document.getElementById("app").style.display = "flex";
     } else {
-        res.innerText = "❌ Errado!";
-        res.style.color = "red";
+        alert("Senha ou usuário incorretos!");
     }
 }
 
-function nextQuestion() {
-    document.getElementById("result").innerText =
-        "Continue aprendendo! Pontuação: " + score;
+/* CONTEÚDOS DA RODA */
+let textos = [
+    "🐝 As abelhas são responsáveis pela polinização de mais de 70% dos alimentos.",
+    "🌱 Sem abelhas, a biodiversidade entra em colapso.",
+    "⚠️ Agrotóxicos são uma das maiores ameaças às colônias.",
+    "💧 A agricultura sustentável depende do equilíbrio ambiental."
+];
+
+/* MOSTRAR INFO */
+function mostrar(i) {
+    let box = document.getElementById("info");
+    box.style.display = "block";
+    box.innerText = textos[i];
+}
+
+/* IR PARA QUIZ */
+function irQuiz() {
+    document.querySelector(".container").style.display = "none";
+    document.getElementById("quiz").style.display = "block";
+}
+
+/* QUIZ */
+function res(c) {
+    let r = document.getElementById("r");
+
+    if (c) {
+        r.innerText = "✔ Correto!";
+        r.style.color = "green";
+    } else {
+        r.innerText = "❌ Tente novamente";
+        r.style.color = "red";
+    }
 }
 
 </script>
 
+</body>
+</html>
