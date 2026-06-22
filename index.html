@@ -7,25 +7,64 @@
 
 <style>
 
-/* ================= LOGIN ================= */
+/* ================= FUNDO ================= */
 body {
     margin: 0;
     font-family: Arial;
-    background: linear-gradient(135deg, #f4c430, #000);
+    overflow: hidden;
     height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
-/* LOGIN GLASS */
+/* GRADIENTE FUNDO */
+.background {
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(135deg, #f4c430, #000);
+    z-index: -3;
+}
+
+/* ================= ABELHAS VOANDO ================= */
+.bee {
+    position: absolute;
+    width: 40px;
+    animation: fly linear infinite;
+    z-index: -1;
+}
+
+@keyframes fly {
+    0% { transform: translate(-10vw, 10vh); }
+    100% { transform: translate(110vw, 80vh); }
+}
+
+/* ================= ESTRELAS ================= */
+.star {
+    position: absolute;
+    width: 10px;
+    height: 10px;
+    background: white;
+    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+    opacity: 0.6;
+    animation: twinkle 3s infinite;
+}
+
+@keyframes twinkle {
+    0%,100% { opacity: 0.2; }
+    50% { opacity: 1; }
+}
+
+/* ================= LOGIN ================= */
 .login {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
     background: rgba(255,255,255,0.15);
     backdrop-filter: blur(10px);
     padding: 30px;
     border-radius: 15px;
-    color: white;
     text-align: center;
+    color: white;
     width: 300px;
 }
 
@@ -55,15 +94,12 @@ button:hover {
 /* ================= APP ================= */
 #app {
     display: none;
-    width: 100%;
     height: 100vh;
-    background: #fff8dc;
     flex-direction: column;
 }
 
-/* HEADER */
 header {
-    background: #000;
+    background: rgba(0,0,0,0.8);
     color: white;
     text-align: center;
     padding: 10px;
@@ -77,32 +113,18 @@ header {
     padding: 20px;
 }
 
-/* ROLETAAAAA */
+/* ROLETA */
 .roleta {
     width: 220px;
     height: 220px;
     border-radius: 50%;
-    background: conic-gradient(
-        #f4c430 0deg 90deg,
-        #222 90deg 180deg,
-        #f4c430 180deg 270deg,
-        #222 270deg 360deg
-    );
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
+    background: conic-gradient(#f4c430 0deg 90deg,#222 90deg 180deg,#f4c430 180deg 270deg,#222 270deg 360deg);
     transition: transform 2s ease-out;
-}
-
-/* BOTÃO */
-.spin {
-    margin-top: 15px;
 }
 
 /* TEXTO */
 .box {
-    margin-top: 20px;
+    margin-top: 15px;
     background: white;
     padding: 15px;
     border-radius: 10px;
@@ -115,6 +137,7 @@ header {
     display: none;
     padding: 20px;
     text-align: center;
+    color: white;
 }
 
 .option {
@@ -127,6 +150,24 @@ header {
 </head>
 
 <body>
+
+<div class="background"></div>
+
+<!-- ABELHAS DECORATIVAS -->
+<img class="bee" src="https://cdn-icons-png.flaticon.com/512/616/616408.png" style="top:10%; animation-duration:12s;">
+<img class="bee" src="https://cdn-icons-png.flaticon.com/512/616/616408.png" style="top:40%; animation-duration:18s;">
+<img class="bee" src="https://cdn-icons-png.flaticon.com/512/616/616408.png" style="top:70%; animation-duration:14s;">
+
+<!-- ESTRELAS -->
+<script>
+for(let i=0;i<25;i++){
+    let s = document.createElement("div");
+    s.className = "star";
+    s.style.top = Math.random()*100 + "vh";
+    s.style.left = Math.random()*100 + "vw";
+    document.body.appendChild(s);
+}
+</script>
 
 <!-- ================= LOGIN ================= -->
 <div class="login" id="login">
@@ -147,27 +188,25 @@ header {
 
 <div class="container">
 
-<!-- ROLETAAAA -->
 <div class="roleta" id="roleta"></div>
 
-<button class="spin" onclick="girar()">🎡 Girar roleta</button>
+<button onclick="girar()">🎡 Girar roleta</button>
 
 <div class="box" id="box"></div>
 
-<button onclick="irQuiz()">Ir para o Quiz 🧠</button>
+<button onclick="irQuiz()">Ir para Quiz 🧠</button>
 
 </div>
 
-<!-- QUIZ -->
 <div id="quiz">
 
 <h2>🧠 Quiz Final</h2>
 
 <p id="q"></p>
 
-<button class="option" onclick="res(1)">Começar agricultura sustentável</button>
+<button class="option" onclick="res(1)">Agricultura sustentável</button>
 <button class="option" onclick="res(0)">Ignorar abelhas</button>
-<button class="option" onclick="res(0)">Usar mais agrotóxicos</button>
+<button class="option" onclick="res(0)">Aumentar agrotóxicos</button>
 
 <p id="r"></p>
 
@@ -177,67 +216,59 @@ header {
 
 <script>
 
-/* ================= LOGIN ================= */
-function entrar() {
+/* LOGIN */
+function entrar(){
     let u = document.getElementById("user").value.toLowerCase();
     let p = document.getElementById("pass").value;
 
-    if (u === "agrinho" && p === "2026") {
-        document.getElementById("login").style.display = "none";
-        document.getElementById("app").style.display = "flex";
+    if(u==="agrinho" && p==="2026"){
+        document.getElementById("login").style.display="none";
+        document.getElementById("app").style.display="flex";
     } else {
         alert("Erro no login!");
     }
 }
 
-/* ================= TEXTO (SEU CONTEÚDO) ================= */
+/* TEXTO */
 let textos = [
-`A polinização é um processo essencial para a reprodução de muitas plantas, permitindo a formação de frutos e sementes e mantendo a biodiversidade.`,
-
-`As abelhas são os principais polinizadores. Elas garantem alimentos como frutas, verduras e sementes, sendo essenciais para a agricultura.`,
-
-`O uso excessivo de agrotóxicos prejudica as abelhas, causando intoxicação, desorientação e redução das populações no mundo.`,
-
-`A solução envolve agricultura sustentável, controle biológico e redução de agrotóxicos para proteger as abelhas e o equilíbrio ambiental.`
+"A polinização permite a reprodução das plantas e mantém a biodiversidade.",
+"As abelhas são essenciais para frutas, verduras e sementes.",
+"Agrotóxicos prejudicam a orientação e sobrevivência das abelhas.",
+"A solução é agricultura sustentável e redução de químicos."
 ];
 
 let graus = 0;
 
-/* ================= ROLETAAAA ================= */
-function girar() {
-    let roleta = document.getElementById("roleta");
+/* ROLETA */
+function girar(){
+    let i = Math.floor(Math.random()*4);
+    graus += 1080 + i*90;
 
-    let index = Math.floor(Math.random() * 4);
+    document.getElementById("roleta").style.transform = `rotate(${graus}deg)`;
 
-    graus += 360 * 3 + (index * 90);
-
-    roleta.style.transform = `rotate(${graus}deg)`;
-
-    setTimeout(() => {
+    setTimeout(()=>{
         let box = document.getElementById("box");
-        box.style.display = "block";
-        box.innerText = textos[index];
-    }, 2000);
+        box.style.display="block";
+        box.innerText = textos[i];
+    },2000);
 }
 
-/* ================= QUIZ ================= */
-function irQuiz() {
-    document.querySelector(".container").style.display = "none";
-    document.getElementById("quiz").style.display = "block";
-
-    document.getElementById("q").innerText =
-        "O que acontece se não protegermos as abelhas?";
+/* QUIZ */
+function irQuiz(){
+    document.querySelector(".container").style.display="none";
+    document.getElementById("quiz").style.display="block";
+    document.getElementById("q").innerText="O que acontece sem abelhas?";
 }
 
-function res(v) {
-    let r = document.getElementById("r");
+function res(v){
+    let r=document.getElementById("r");
 
-    if (v === 1) {
-        r.innerText = "✔ Excelente! Você entendeu a importância da sustentabilidade.";
-        r.style.color = "green";
+    if(v){
+        r.innerText="✔ Excelente! Você entendeu sustentabilidade.";
+        r.style.color="lightgreen";
     } else {
-        r.innerText = "❌ Pense na importância das abelhas!";
-        r.style.color = "red";
+        r.innerText="❌ Reflita sobre a importância das abelhas.";
+        r.style.color="red";
     }
 }
 
