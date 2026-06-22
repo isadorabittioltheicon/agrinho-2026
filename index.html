@@ -1,13 +1,327 @@
 <!DOCTYPE html>
-<html>
-    <head>
-        <title>agrinho2026</title>
-        <meta charset="utf-8"/>
-    </head>
+<html lang="pt-br">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Agrinho 2026 - Abelhas e Sustentabilidade</title>
 
+<style>
+/* =========================
+   VARIÁVEIS DE COR
+========================= */
+:root {
+    --amarelo: #f4c430;
+    --preto: #111;
+    --branco: #fff;
+    --fundo: #fff8dc;
+}
 
+/* =========================
+   ESTILO GERAL
+========================= */
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: var(--fundo);
+    color: #222;
+    transition: 0.3s;
+}
 
+/* MODO ESCURO */
+.dark {
+    background: #121212;
+    color: white;
+}
 
+/* =========================
+   HEADER HERO
+========================= */
+header {
+    background: linear-gradient(90deg, var(--amarelo), var(--preto));
+    color: white;
+    text-align: center;
+    padding: 40px 20px;
+    position: relative;
+    overflow: hidden;
+}
 
+header h1 {
+    margin: 0;
+    font-size: 2.2rem;
+}
 
+header p {
+    margin-top: 10px;
+}
+
+/* ===== ABELHA ANIMADA ===== */
+.bee {
+    position: absolute;
+    width: 40px;
+    top: 20px;
+    left: -50px;
+    animation: fly 6s infinite linear;
+}
+
+@keyframes fly {
+    0% { left: -50px; top: 30px; }
+    50% { top: 10px; }
+    100% { left: 110%; top: 40px; }
+}
+
+/* =========================
+   CONTEÚDO
+========================= */
+main {
+    max-width: 900px;
+    margin: auto;
+    padding: 20px;
+}
+
+/* CARDS */
+.card {
+    background: white;
+    padding: 18px;
+    margin: 15px 0;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+    transition: 0.3s;
+}
+
+.dark .card {
+    background: #1f1f1f;
+}
+
+/* BOTÕES */
+button {
+    background: var(--amarelo);
+    border: none;
+    padding: 10px 12px;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: black;
+    color: white;
+}
+
+/* INPUT */
+input {
+    padding: 10px;
+    width: 80%;
+    margin-top: 10px;
+}
+
+/* =========================
+   QUIZ
+========================= */
+.option {
+    display: block;
+    width: 100%;
+    margin: 8px 0;
+}
+
+#progress {
+    height: 10px;
+    background: #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    margin-bottom: 10px;
+}
+
+#bar {
+    height: 100%;
+    width: 0%;
+    background: var(--amarelo);
+}
+
+/* RESPONSIVO */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <img class="bee" src="https://cdn-icons-png.flaticon.com/512/616/616408.png">
+
+    <h1>🐝 Abelhas e o Futuro Sustentável</h1>
+    <p>Agrinho 2026 - Água, campo e biodiversidade</p>
+
+    <button onclick="modoEscuro()">🌙 Modo Escuro</button>
+</header>
+
+<main>
+
+<!-- =========================
+     NOME DO USUÁRIO
+========================= -->
+<section class="card">
+    <h2>👋 Bem-vindo(a)</h2>
+    <p>Digite seu nome para começar:</p>
+
+    <input id="nome" placeholder="Seu nome">
+    <button onclick="entrar()">Entrar</button>
+
+    <h3 id="msg"></h3>
+</section>
+
+<!-- =========================
+     CONTEÚDO
+========================= -->
+<section class="card">
+    <h2>🐝 Importância das abelhas</h2>
+    <p>As abelhas são essenciais para a polinização e produção de alimentos. Sem elas, haveria colapso na agricultura.</p>
+</section>
+
+<section class="card">
+    <h2>⚠️ Agrotóxicos</h2>
+    <p>O uso excessivo de pesticidas ameaça diretamente a vida das abelhas e o equilíbrio ambiental.</p>
+</section>
+
+<section class="card">
+    <h2>🌱 Sustentabilidade</h2>
+    <p>Preservar polinizadores é garantir o futuro da produção de alimentos e da biodiversidade.</p>
+</section>
+
+<!-- =========================
+     QUIZ
+========================= -->
+<section class="card">
+    <h2>🧠 Quiz Interativo</h2>
+
+    <div id="progress"><div id="bar"></div></div>
+
+    <p id="question">Clique para começar</p>
+
+    <div id="options"></div>
+
+    <p id="score"></p>
+
+    <button onclick="startQuiz()">Iniciar Quiz</button>
+</section>
+
+</main>
+
+<script>
+
+/* =========================
+   MODO ESCURO
+========================= */
+function modoEscuro() {
+    document.body.classList.toggle("dark");
+}
+
+/* =========================
+   NOME DO USUÁRIO
+========================= */
+function entrar() {
+    let nome = document.getElementById("nome").value;
+    document.getElementById("msg").innerText =
+        "Olá, " + nome + "! 🐝 Vamos aprender sobre sustentabilidade!";
+}
+
+/* =========================
+   QUIZ COMPLETO
+========================= */
+
+let questions = [
+    {
+        q: "O que acontece se as abelhas sumirem?",
+        options: [
+            { text: "Mais alimentos", correct: false },
+            { text: "Colapso na produção de alimentos", correct: true },
+            { text: "Nada muda", correct: false }
+        ]
+    },
+    {
+        q: "As abelhas ajudam principalmente em:",
+        options: [
+            { text: "Polinização", correct: true },
+            { text: "Construção de solo", correct: false },
+            { text: "Poluição", correct: false }
+        ]
+    },
+    {
+        q: "O que mais prejudica as abelhas?",
+        options: [
+            { text: "Agrotóxicos", correct: true },
+            { text: "Flores", correct: false },
+            { text: "Água limpa", correct: false }
+        ]
+    }
+];
+
+let index = 0;
+let score = 0;
+
+/* iniciar quiz */
+function startQuiz() {
+    index = 0;
+    score = 0;
+    showQuestion();
+}
+
+/* mostrar pergunta */
+function showQuestion() {
+    let q = questions[index];
+
+    document.getElementById("question").innerText = q.q;
+
+    let optionsDiv = document.getElementById("options");
+    optionsDiv.innerHTML = "";
+
+    q.options.forEach(opt => {
+        let btn = document.createElement("button");
+        btn.classList.add("option");
+        btn.innerText = opt.text;
+
+        btn.onclick = () => {
+            if (opt.correct) score++;
+            next();
+        };
+
+        optionsDiv.appendChild(btn);
+    });
+
+    updateBar();
+}
+
+/* próxima pergunta */
+function next() {
+    index++;
+
+    if (index < questions.length) {
+        showQuestion();
+    } else {
+        finish();
+    }
+}
+
+/* finalizar */
+function finish() {
+    document.getElementById("question").innerText = "Quiz finalizado!";
+    document.getElementById("options").innerHTML = "";
+
+    document.getElementById("score").innerText =
+        "Você acertou " + score + " de " + questions.length;
+}
+
+/* barra de progresso */
+function updateBar() {
+    let percent = (index / questions.length) * 100;
+    document.getElementById("bar").style.width = percent + "%";
+}
+
+</script>
+
+</body>
 </html>
