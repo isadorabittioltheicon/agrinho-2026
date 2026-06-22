@@ -18,14 +18,14 @@ body {
     align-items: center;
 }
 
-/* GLASS LOGIN */
+/* LOGIN GLASS */
 .login {
     background: rgba(255,255,255,0.15);
     backdrop-filter: blur(10px);
     padding: 30px;
     border-radius: 15px;
-    text-align: center;
     color: white;
+    text-align: center;
     width: 300px;
 }
 
@@ -69,19 +69,18 @@ header {
     padding: 10px;
 }
 
-/* CONTEÚDO */
+/* CONTAINER */
 .container {
     display: flex;
-    justify-content: center;
-    align-items: center;
     flex-direction: column;
-    flex: 1;
+    align-items: center;
+    padding: 20px;
 }
 
-/* RODA */
-.roda {
-    width: 250px;
-    height: 250px;
+/* ROLETAAAAA */
+.roleta {
+    width: 220px;
+    height: 220px;
     border-radius: 50%;
     background: conic-gradient(
         #f4c430 0deg 90deg,
@@ -93,23 +92,21 @@ header {
     justify-content: center;
     align-items: center;
     position: relative;
+    transition: transform 2s ease-out;
 }
 
-/* BOTÕES DA RODA */
-.part {
-    position: absolute;
-    width: 120px;
-    height: 120px;
-    cursor: pointer;
+/* BOTÃO */
+.spin {
+    margin-top: 15px;
 }
 
-/* INFO */
-.info {
+/* TEXTO */
+.box {
     margin-top: 20px;
-    width: 80%;
     background: white;
     padding: 15px;
     border-radius: 10px;
+    width: 90%;
     display: none;
 }
 
@@ -117,6 +114,13 @@ header {
 #quiz {
     display: none;
     padding: 20px;
+    text-align: center;
+}
+
+.option {
+    display: block;
+    margin: 10px auto;
+    width: 90%;
 }
 
 </style>
@@ -138,23 +142,17 @@ header {
 <div id="app">
 
 <header>
-<h2>🐝 Painel das Abelhas</h2>
+<h3>🐝 Painel das Abelhas</h3>
 </header>
 
 <div class="container">
 
-<!-- RODA -->
-<div class="roda">
+<!-- ROLETAAAA -->
+<div class="roleta" id="roleta"></div>
 
-    <div class="part" onclick="mostrar(0)"></div>
-    <div class="part" onclick="mostrar(1)"></div>
-    <div class="part" onclick="mostrar(2)"></div>
-    <div class="part" onclick="mostrar(3)"></div>
+<button class="spin" onclick="girar()">🎡 Girar roleta</button>
 
-</div>
-
-<!-- INFO -->
-<div class="info" id="info"></div>
+<div class="box" id="box"></div>
 
 <button onclick="irQuiz()">Ir para o Quiz 🧠</button>
 
@@ -162,12 +160,14 @@ header {
 
 <!-- QUIZ -->
 <div id="quiz">
-<h2>🧠 Quiz</h2>
 
-<p id="q">O que acontece sem abelhas?</p>
+<h2>🧠 Quiz Final</h2>
 
-<button onclick="res(true)">Colapso agrícola</button>
-<button onclick="res(false)">Nada muda</button>
+<p id="q"></p>
+
+<button class="option" onclick="res(1)">Começar agricultura sustentável</button>
+<button class="option" onclick="res(0)">Ignorar abelhas</button>
+<button class="option" onclick="res(0)">Usar mais agrotóxicos</button>
 
 <p id="r"></p>
 
@@ -177,7 +177,7 @@ header {
 
 <script>
 
-/* LOGIN */
+/* ================= LOGIN ================= */
 function entrar() {
     let u = document.getElementById("user").value.toLowerCase();
     let p = document.getElementById("pass").value;
@@ -186,40 +186,57 @@ function entrar() {
         document.getElementById("login").style.display = "none";
         document.getElementById("app").style.display = "flex";
     } else {
-        alert("Senha ou usuário incorretos!");
+        alert("Erro no login!");
     }
 }
 
-/* CONTEÚDOS DA RODA */
+/* ================= TEXTO (SEU CONTEÚDO) ================= */
 let textos = [
-    "🐝 As abelhas são responsáveis pela polinização de mais de 70% dos alimentos.",
-    "🌱 Sem abelhas, a biodiversidade entra em colapso.",
-    "⚠️ Agrotóxicos são uma das maiores ameaças às colônias.",
-    "💧 A agricultura sustentável depende do equilíbrio ambiental."
+`A polinização é um processo essencial para a reprodução de muitas plantas, permitindo a formação de frutos e sementes e mantendo a biodiversidade.`,
+
+`As abelhas são os principais polinizadores. Elas garantem alimentos como frutas, verduras e sementes, sendo essenciais para a agricultura.`,
+
+`O uso excessivo de agrotóxicos prejudica as abelhas, causando intoxicação, desorientação e redução das populações no mundo.`,
+
+`A solução envolve agricultura sustentável, controle biológico e redução de agrotóxicos para proteger as abelhas e o equilíbrio ambiental.`
 ];
 
-/* MOSTRAR INFO */
-function mostrar(i) {
-    let box = document.getElementById("info");
-    box.style.display = "block";
-    box.innerText = textos[i];
+let graus = 0;
+
+/* ================= ROLETAAAA ================= */
+function girar() {
+    let roleta = document.getElementById("roleta");
+
+    let index = Math.floor(Math.random() * 4);
+
+    graus += 360 * 3 + (index * 90);
+
+    roleta.style.transform = `rotate(${graus}deg)`;
+
+    setTimeout(() => {
+        let box = document.getElementById("box");
+        box.style.display = "block";
+        box.innerText = textos[index];
+    }, 2000);
 }
 
-/* IR PARA QUIZ */
+/* ================= QUIZ ================= */
 function irQuiz() {
     document.querySelector(".container").style.display = "none";
     document.getElementById("quiz").style.display = "block";
+
+    document.getElementById("q").innerText =
+        "O que acontece se não protegermos as abelhas?";
 }
 
-/* QUIZ */
-function res(c) {
+function res(v) {
     let r = document.getElementById("r");
 
-    if (c) {
-        r.innerText = "✔ Correto!";
+    if (v === 1) {
+        r.innerText = "✔ Excelente! Você entendeu a importância da sustentabilidade.";
         r.style.color = "green";
     } else {
-        r.innerText = "❌ Tente novamente";
+        r.innerText = "❌ Pense na importância das abelhas!";
         r.style.color = "red";
     }
 }
