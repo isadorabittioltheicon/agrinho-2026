@@ -1,277 +1,1173 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="utf-8">
+
+<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Agrinho 2026 - Abelhas</title>
+
+<title>EcoVita Agro</title>
 
 <style>
 
-/* ================= FUNDO ================= */
-body {
-    margin: 0;
-    font-family: Arial;
-    overflow: hidden;
-    height: 100vh;
+/* ==========================
+   CONFIGURAÇÕES GERAIS
+========================== */
+
+*{
+    box-sizing:border-box;
+    font-family: Arial, sans-serif;
 }
 
-/* GRADIENTE FUNDO */
-.background {
-    position: fixed;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(135deg, #f4c430, #000);
-    z-index: -3;
+body{
+    margin:0;
+    height:100vh;
+    overflow:hidden;
+    background:#071a0d;
 }
 
-/* ================= ABELHAS VOANDO ================= */
-.bee {
-    position: absolute;
-    width: 40px;
-    animation: fly linear infinite;
-    z-index: -1;
+
+/* ==========================
+   FUNDO COM ESTRELAS
+========================== */
+
+.background{
+    position:fixed;
+    width:100%;
+    height:100%;
+    background:
+    linear-gradient(135deg,#063b1c,#0f5c2b,#021307);
+    z-index:-2;
 }
 
-@keyframes fly {
-    0% { transform: translate(-10vw, 10vh); }
-    100% { transform: translate(110vw, 80vh); }
+
+.star{
+    position:absolute;
+    width:8px;
+    height:8px;
+    background:white;
+    clip-path:polygon(
+    50% 0%,
+    61% 35%,
+    100% 35%,
+    68% 58%,
+    80% 100%,
+    50% 72%,
+    20% 100%,
+    32% 58%,
+    0% 35%,
+    39% 35%
+    );
+    animation:piscando 2s infinite alternate;
 }
 
-/* ================= ESTRELAS ================= */
-.star {
-    position: absolute;
-    width: 10px;
-    height: 10px;
-    background: white;
-    clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
-    opacity: 0.6;
-    animation: twinkle 3s infinite;
+
+@keyframes piscando{
+
+    from{
+        opacity:0.2;
+        transform:scale(.8);
+    }
+
+    to{
+        opacity:1;
+        transform:scale(1.4);
+    }
+
 }
 
-@keyframes twinkle {
-    0%,100% { opacity: 0.2; }
-    50% { opacity: 1; }
+
+/* ==========================
+ LOGIN
+========================== */
+
+
+.login{
+
+    width:330px;
+    padding:35px;
+
+    background:
+    rgba(255,255,255,0.12);
+
+    backdrop-filter:blur(15px);
+
+    border-radius:20px;
+
+    color:white;
+
+    text-align:center;
+
+    position:absolute;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    box-shadow:
+    0 0 40px rgba(0,0,0,.4);
+
 }
 
-/* ================= LOGIN ================= */
-.login {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%,-50%);
-    background: rgba(255,255,255,0.15);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 15px;
-    text-align: center;
-    color: white;
-    width: 300px;
+
+.logo{
+
+    font-size:40px;
+
 }
 
-input {
-    width: 90%;
-    padding: 10px;
-    margin: 8px 0;
-    border: none;
-    border-radius: 8px;
+
+.login h1{
+
+    margin:10px 0;
+
 }
 
-button {
-    width: 100%;
-    padding: 10px;
-    border: none;
-    border-radius: 8px;
-    background: #f4c430;
-    font-weight: bold;
-    cursor: pointer;
+
+
+input{
+
+    width:100%;
+    padding:13px;
+
+    margin:8px 0;
+
+    border:none;
+
+    border-radius:10px;
+
 }
 
-button:hover {
-    background: black;
-    color: white;
+
+
+button{
+
+    width:100%;
+
+    padding:13px;
+
+    margin-top:10px;
+
+    border:none;
+
+    border-radius:10px;
+
+    background:#76d13d;
+
+    font-weight:bold;
+
+    cursor:pointer;
+
+    transition:.3s;
+
 }
 
-/* ================= APP ================= */
-#app {
-    display: none;
-    height: 100vh;
-    flex-direction: column;
+
+button:hover{
+
+    transform:scale(1.05);
+
+    background:#9aff55;
+
 }
 
-header {
-    background: rgba(0,0,0,0.8);
-    color: white;
-    text-align: center;
-    padding: 10px;
+
+
+/* ==========================
+   PÁGINAS
+========================== */
+
+
+#site{
+
+display:none;
+
+height:100vh;
+
+color:white;
+
+overflow:auto;
+
 }
 
-/* CONTAINER */
-.container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    padding: 20px;
+
+header{
+
+background:
+rgba(0,0,0,.5);
+
+padding:20px;
+
+text-align:center;
+
 }
 
-/* ROLETA */
-.roleta {
-    width: 220px;
-    height: 220px;
-    border-radius: 50%;
-    background: conic-gradient(#f4c430 0deg 90deg,#222 90deg 180deg,#f4c430 180deg 270deg,#222 270deg 360deg);
-    transition: transform 2s ease-out;
+
+
+.container{
+
+max-width:900px;
+
+margin:auto;
+
+padding:30px;
+
 }
 
-/* TEXTO */
-.box {
-    margin-top: 15px;
-    background: white;
-    padding: 15px;
-    border-radius: 10px;
-    width: 90%;
-    display: none;
+
+
+.card{
+
+background:
+rgba(255,255,255,.12);
+
+backdrop-filter:blur(10px);
+
+padding:30px;
+
+border-radius:20px;
+
+margin-top:20px;
+
 }
 
-/* QUIZ */
-#quiz {
-    display: none;
-    padding: 20px;
-    text-align: center;
-    color: white;
+
+
+.card h2{
+
+color:#9aff55;
+
 }
 
-.option {
-    display: block;
-    margin: 10px auto;
-    width: 90%;
+
+
+/* botão especial */
+
+.next{
+
+margin-top:30px;
+
 }
 
+/* ==========================
+   ROLETA ECOVITA
+========================== */
+
+#roletaPage{
+    display:none;
+    min-height:100vh;
+    padding:30px;
+    text-align:center;
+}
+
+
+.roletaArea{
+
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+}
+
+
+.roleta{
+
+    width:280px;
+    height:280px;
+
+    border-radius:50%;
+
+    background:
+    conic-gradient(
+    #3fa34d 0deg 90deg,
+    #8bc34a 90deg 180deg,
+    #145a32 180deg 270deg,
+    #76d13d 270deg 360deg
+    );
+
+    border:8px solid white;
+
+    transition:transform 3s cubic-bezier(.17,.67,.12,.99);
+
+    box-shadow:
+    0 0 30px rgba(118,209,61,.5);
+
+}
+
+
+.girar{
+
+    width:220px;
+
+    margin-top:25px;
+
+}
+
+
+/* CARD GRANDE QUE APARECE */
+
+.infoGrande{
+
+    display:none;
+
+    position:fixed;
+
+    top:50%;
+    left:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:80%;
+    max-width:650px;
+
+    background:white;
+
+    color:#222;
+
+    padding:35px;
+
+    border-radius:25px;
+
+    box-shadow:
+    0 0 50px rgba(0,0,0,.5);
+
+    animation:aparecer .5s;
+
+}
+
+
+.infoGrande h2{
+
+color:#237a3b;
+
+}
+
+
+
+@keyframes aparecer{
+
+from{
+
+opacity:0;
+
+transform:
+translate(-50%,-40%);
+
+}
+
+to{
+
+opacity:1;
+
+transform:
+translate(-50%,-50%);
+
+}
+
+}
+
+
+
+.fechar{
+
+background:#237a3b;
+
+color:white;
+
+}
+
+    /* ==========================
+        QUIZ
+========================== */
+
+
+#quizPage{
+
+display:none;
+
+min-height:100vh;
+
+padding:30px;
+
+text-align:center;
+
+}
+
+
+.quizBox{
+
+max-width:700px;
+
+margin:auto;
+
+background:
+rgba(255,255,255,0.12);
+
+backdrop-filter:blur(10px);
+
+padding:30px;
+
+border-radius:25px;
+
+}
+
+
+.quizBox h2{
+
+color:#9aff55;
+
+}
+
+
+.pergunta{
+
+font-size:22px;
+
+margin:20px;
+
+}
+
+
+.resposta{
+
+background:#76d13d;
+
+margin:10px;
+
+color:white;
+
+}
+
+
+.resposta:hover{
+
+background:#4c9c22;
+
+}
+
+
+#resultado{
+
+display:none;
+
+background:white;
+
+color:#222;
+
+padding:30px;
+
+border-radius:20px;
+
+margin-top:20px;
+
+font-size:20px;
+
+}
+
+    <!-- ==========================
+        QUIZ FINAL
+========================== -->
+
+
+<div id="quizPage">
+
+
+<header>
+
+<h1>🧠 Desafio EcoVita</h1>
+
+<p>
+Teste seus conhecimentos sobre sustentabilidade
+</p>
+
+</header>
+
+
+
+<div class="quizBox">
+
+
+<h2 id="numero">
+Pergunta 1/5
+</h2>
+
+
+<p class="pergunta" id="pergunta">
+
+</p>
+
+
+
+<div id="opcoes">
+
+</div>
+
+
+
+<div id="resultado">
+
+</div>
+
+
+</div>
+
+
+</div>
+    
 </style>
+
 </head>
+
 
 <body>
 
+
 <div class="background"></div>
 
-<!-- ABELHAS DECORATIVAS -->
-<img class="bee" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Apis_mellifera_flying.jpg" style="top:10%; animation-duration:12s;">
-<img class="bee" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Apis_mellifera_flying.jpg" style="top:40%; animation-duration:18s;">
-<img class="bee" src="https://upload.wikimedia.org/wikipedia/commons/4/4c/Apis_mellifera_flying.jpg" style="top:70%; animation-duration:14s;">
-<!-- ESTRELAS -->
+
+
+<!-- estrelas -->
 <script>
-for(let i=0;i<25;i++){
-    let s = document.createElement("div");
-    s.className = "star";
-    s.style.top = Math.random()*100 + "vh";
-    s.style.left = Math.random()*100 + "vw";
-    document.body.appendChild(s);
+
+for(let i=0;i<50;i++){
+
+let estrela=document.createElement("div");
+
+estrela.className="star";
+
+estrela.style.top=Math.random()*100+"%";
+
+estrela.style.left=Math.random()*100+"%";
+
+estrela.style.animationDelay=Math.random()*3+"s";
+
+document.body.appendChild(estrela);
+
 }
+
+/* ==========================
+        QUIZ
+========================== */
+
+
+let perguntas=[
+
+
+{
+
+pergunta:"Qual recurso é essencial para uma agricultura sustentável?",
+
+opcoes:[
+"Água",
+"Desperdício",
+"Poluição"
+],
+
+correta:0
+
+},
+
+
+
+{
+
+pergunta:"Qual prática ajuda a preservar o solo?",
+
+opcoes:[
+"Rotação de culturas",
+"Desmatamento",
+"Uso exagerado de químicos"
+],
+
+correta:0
+
+},
+
+
+
+{
+
+pergunta:"Por que a biodiversidade é importante?",
+
+opcoes:[
+"Porque mantém o equilíbrio dos ecossistemas",
+"Porque aumenta a poluição",
+"Porque elimina espécies"
+],
+
+correta:0
+
+},
+
+
+
+{
+
+pergunta:"A EcoVita Agro busca unir:",
+
+opcoes:[
+"Produção e preservação ambiental",
+"Produção e desperdício",
+"Agricultura e destruição"
+],
+
+correta:0
+
+},
+
+
+
+{
+
+pergunta:"Uma tecnologia sustentável pode ajudar a:",
+
+opcoes:[
+"Economizar recursos naturais",
+"Gastar mais água",
+"Prejudicar o solo"
+],
+
+correta:0
+
+}
+
+
+];
+
+
+
+let perguntaAtual=0;
+
+let pontos=0;
+
+
+
+function irQuiz(){
+
+
+document.getElementById("roletaPage").style.display="none";
+
+
+document.getElementById("quizPage").style.display="block";
+
+
+mostrarPergunta();
+
+
+}
+
+
+
+
+function mostrarPergunta(){
+
+
+let p=perguntas[perguntaAtual];
+
+
+
+document.getElementById("numero").innerText=
+
+"Pergunta "+(perguntaAtual+1)+"/5";
+
+
+
+document.getElementById("pergunta").innerText=
+
+p.pergunta;
+
+
+
+let div=document.getElementById("opcoes");
+
+div.innerHTML="";
+
+
+
+p.opcoes.forEach((opcao,index)=>{
+
+
+let botao=document.createElement("button");
+
+
+botao.className="resposta";
+
+
+botao.innerText=opcao;
+
+
+
+botao.onclick=function(){
+
+responder(index);
+
+};
+
+
+
+div.appendChild(botao);
+
+
+});
+
+
+}
+
+
+
+
+function responder(resposta){
+
+
+if(resposta==perguntas[perguntaAtual].correta){
+
+pontos++;
+
+}
+
+
+
+perguntaAtual++;
+
+
+
+if(perguntaAtual<perguntas.length){
+
+mostrarPergunta();
+
+}
+
+else{
+
+mostrarResultado();
+
+}
+
+
+}
+
+
+
+
+function mostrarResultado(){
+
+
+document.getElementById("numero").style.display="none";
+
+
+document.getElementById("pergunta").style.display="none";
+
+
+document.getElementById("opcoes").style.display="none";
+
+
+
+let resultado=document.getElementById("resultado");
+
+
+resultado.style.display="block";
+
+
+
+if(pontos==5){
+
+
+resultado.innerHTML=
+"🏆 Guardião do Futuro Sustentável!<br><br>"+
+"Você entende como tecnologia e natureza podem trabalhar juntas.";
+
+
+}
+
+else if(pontos>=3){
+
+
+resultado.innerHTML=
+"🌱 Agricultor consciente!<br><br>"+
+"Você conhece boas práticas para um futuro sustentável.";
+
+
+}
+
+else{
+
+
+resultado.innerHTML=
+"🌎 Explorador sustentável!<br><br>"+
+"Continue aprendendo sobre como proteger o planeta.";
+
+
+}
+
+
+
+}
+
+    
 </script>
 
+
+
 <!-- ================= LOGIN ================= -->
+
+
 <div class="login" id="login">
-    <h2>🐝 Agrinho 2026</h2>
 
-    <input id="user" placeholder="Nome do concurso">
-    <input id="pass" placeholder="Ano">
 
-    <button onclick="entrar()">Entrar</button>
+<div class="logo">
+🌱
 </div>
 
-<!-- ================= APP ================= -->
-<div id="app">
+
+<h1>EcoVita Agro</h1>
+
+<p>
+Tecnologia e sustentabilidade cultivando o futuro
+</p>
+
+
+<input id="usuario"
+placeholder="Nome do concurso">
+
+
+<input id="senha"
+placeholder="Ano">
+
+
+
+<button onclick="entrar()">
+Entrar
+</button>
+
+
+</div>
+
+
+
+
+
+<!-- ================= SITE ================= -->
+
+
+<div id="site">
+
 
 <header>
-<h3>🐝 Painel das Abelhas</h3>
+
+<h1>🌱 EcoVita Agro</h1>
+
+<p>
+A fazenda sustentável do futuro
+</p>
+
+
 </header>
+
+
 
 <div class="container">
 
-<div class="roleta" id="roleta"></div>
 
-<button onclick="girar()">🎡 Girar roleta</button>
+<div class="card">
 
-<div class="box" id="box"></div>
 
-<button onclick="irQuiz()">Ir para Quiz 🧠</button>
+<h2>
+Bem-vindo à EcoVita Agro
+</h2>
+
+
+<p>
+
+A EcoVita Agro é uma proposta de empresa que busca transformar a agricultura através da união entre tecnologia e sustentabilidade.
+
+Nosso objetivo é criar um modelo de produção mais inteligente, onde seja possível produzir alimentos de qualidade sem destruir os recursos naturais.
+
+</p>
+
+
+
+<p>
+
+Através de soluções como economia de água, preservação da biodiversidade e manejo sustentável do solo, construímos uma visão de futuro para o campo.
+
+</p>
+
+
+
+<button class="next" onclick="irRoleta()">
+
+Explorar soluções da EcoVita 🌱
+
+</button>
+
 
 </div>
 
-<div id="quiz">
-
-<h2>🧠 Quiz Final</h2>
-
-<p id="q"></p>
-
-<button class="option" onclick="res(1)">Agricultura sustentável</button>
-<button class="option" onclick="res(0)">Ignorar abelhas</button>
-<button class="option" onclick="res(0)">Aumentar agrotóxicos</button>
-
-<p id="r"></p>
 
 </div>
 
+
 </div>
+
+
 
 <script>
 
-/* LOGIN */
+
 function entrar(){
-    let u = document.getElementById("user").value.toLowerCase();
-    let p = document.getElementById("pass").value;
 
-    if(u==="agrinho" && p==="2026"){
-        document.getElementById("login").style.display="none";
-        document.getElementById("app").style.display="flex";
-    } else {
-        alert("Erro no login!");
-    }
+
+let usuario=
+document.getElementById("usuario").value.toLowerCase();
+
+
+let senha=
+document.getElementById("senha").value;
+
+
+
+if(usuario=="agrinho" && senha=="2026"){
+
+
+document.getElementById("login").style.display="none";
+
+
+document.getElementById("site").style.display="block";
+
+
 }
 
-/* TEXTO */
-let textos = [
-"A polinização permite a reprodução das plantas e mantém a biodiversidade.",
-"As abelhas são essenciais para frutas, verduras e sementes.",
-"Agrotóxicos prejudicam a orientação e sobrevivência das abelhas.",
-"A solução é agricultura sustentável e redução de químicos."
-];
+else{
 
-let graus = 0;
+alert("Usuário ou senha incorretos!");
 
-/* ROLETA */
-function girar(){
-    let i = Math.floor(Math.random()*4);
-    graus += 1080 + i*90;
-
-    document.getElementById("roleta").style.transform = `rotate(${graus}deg)`;
-
-    setTimeout(()=>{
-        let box = document.getElementById("box");
-        box.style.display="block";
-        box.innerText = textos[i];
-    },2000);
 }
 
-/* QUIZ */
-function irQuiz(){
-    document.querySelector(".container").style.display="none";
-    document.getElementById("quiz").style.display="block";
-    document.getElementById("q").innerText="O que devemos fazer a partir da conclusão do trabalho?";
+
 }
 
-function res(v){
-    let r=document.getElementById("r");
 
-    if(v){
-        r.innerText="✔ Excelente! Você entendeu sustentabilidade.";
-        r.style.color="lightgreen";
-    } else {
-        r.innerText="❌ Reflita sobre a importância das abelhas.";
-        r.style.color="red";
-    }
+
+function irRoleta(){
+
+
+alert("Próxima etapa: Central de soluções EcoVita 🌱");
+
+
 }
+
 
 </script>
+<!-- ==========================
+ ROLETE ECOVITA
+========================== -->
+
+<div id="roletaPage">
+
+
+<header>
+
+<h1>🌱 Central de Soluções EcoVita</h1>
+
+<p>
+Gire a roleta e descubra nossas propostas sustentáveis
+</p>
+
+</header>
+
+function irRoleta(){
+
+document.getElementById("site").style.display="none";
+
+document.getElementById("roletaPage").style.display="block";
+
+}
+
+<div class="roletaArea">
+
+
+<div class="roleta" id="roleta">
+
+</div>
+
+
+<button class="girar" onclick="girarRoleta()">
+
+🎡 Girar roleta
+
+</button>
+
+
+
+<p id="contador">
+
+Soluções descobertas: 0/4
+
+</p>
+
+
+<button id="quizBtn"
+style="display:none"
+onclick="irQuiz()">
+
+Ir para o desafio sustentável 🧠
+
+</button>
+
+
+</div>
+
+
+
+</div>
+
+
+
+<!-- CARD POPUP -->
+
+<div class="infoGrande" id="infoGrande">
+
+
+<h2 id="tituloInfo"></h2>
+
+
+<p id="textoInfo"></p>
+
+
+
+<button class="fechar"
+onclick="fecharInfo()">
+
+Continuar
+
+</button>
+
+
+</div>
+
+let solucoes=[
+
+{
+
+titulo:"💧 Água Inteligente",
+
+texto:"A EcoVita Agro utiliza tecnologias de monitoramento para evitar desperdícios de água. Sistemas inteligentes ajudam a identificar a necessidade das plantações e permitem uma irrigação mais eficiente, além do reaproveitamento da água da chuva."
+
+},
+
+
+{
+
+titulo:"🌱 Produção Sustentável",
+
+texto:"A empresa incentiva práticas como compostagem, rotação de culturas e manejo responsável do solo. Dessa forma, é possível produzir alimentos mantendo a qualidade da terra para as próximas gerações."
+
+},
+
+
+{
+
+titulo:"🌎 Biodiversidade Protegida",
+
+texto:"Uma agricultura sustentável depende do equilíbrio da natureza. A EcoVita Agro preserva áreas verdes e protege diferentes espécies importantes para o funcionamento dos ecossistemas."
+
+},
+
+
+{
+
+titulo:"☀️ Futuro do Campo",
+
+texto:"A fazenda do futuro une tecnologia e consciência ambiental. A EcoVita acredita que inovação e preservação devem caminhar juntas para criar uma agricultura mais forte e sustentável."
+
+}
+
+];
+
+
+
+let usadas=[];
+
+let giro=0;
+
+
+
+function girarRoleta(){
+
+
+if(usadas.length==4){
+
+return;
+
+}
+
+
+
+let escolhido;
+
+
+do{
+
+escolhido=Math.floor(Math.random()*4);
+
+}
+
+while(usadas.includes(escolhido));
+
+
+
+usadas.push(escolhido);
+
+
+
+giro+=1080+(escolhido*90);
+
+
+
+document.getElementById("roleta").style.transform=
+`rotate(${giro}deg)`;
+
+
+
+setTimeout(()=>{
+
+
+document.getElementById("tituloInfo").innerText=
+solucoes[escolhido].titulo;
+
+
+document.getElementById("textoInfo").innerText=
+solucoes[escolhido].texto;
+
+
+document.getElementById("infoGrande").style.display="block";
+
+
+
+document.getElementById("contador").innerText=
+"Soluções descobertas: "+usadas.length+"/4";
+
+
+
+if(usadas.length==4){
+
+document.getElementById("quizBtn").style.display="block";
+
+}
+
+
+},3000);
+
+
+}
+
+
+
+function fecharInfo(){
+
+document.getElementById("infoGrande").style.display="none";
+
+}
+
 
 </body>
 </html>
